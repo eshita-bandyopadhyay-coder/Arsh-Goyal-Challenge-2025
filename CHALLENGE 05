@@ -1,0 +1,32 @@
+//LEETCODE 299: Bulls & Cows
+
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int x=0;
+        int n = secret.size();
+        unordered_map<char,int>f1;
+        unordered_map<char,int>f2;
+        for(int i=0;i<n;++i)
+        {
+            if(secret[i]==guess[i])
+            {
+                x++;
+            }
+            else{
+                f1[secret[i]]++;
+                f2[guess[i]]++;
+            }
+        }
+        int y=0;
+        for(auto item:f1)
+        {
+            char ch = item.first;
+            if(f2.count(ch))
+            {
+                y+=min(item.second,f2[ch]);
+            }
+        }
+        return to_string(x)+'A'+ to_string(y)+'B';
+    }
+};
