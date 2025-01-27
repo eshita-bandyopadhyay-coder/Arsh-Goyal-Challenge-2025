@@ -1,0 +1,38 @@
+//LEETCODE 2943: Maximize Area of Square Hole in a Grid
+
+class Solution {
+public:
+    int maximizeSquareHoleArea(int n, int m, vector<int>& hBars, vector<int>& vBars) {
+        sort(hBars.begin(),hBars.end());
+        sort(vBars.begin(),vBars.end());
+
+        int ver_count=1;
+        int max_vcount=1;
+        for(int i=0 ; i<hBars.size()-1;i++)
+        {
+            if(hBars[i]+1==hBars[i+1]) ver_count++;
+            else
+            {
+                ver_count=1;
+            }
+            max_vcount = max(max_vcount,ver_count);
+        }
+
+        int hor_count=1;
+        int max_hcount=1;
+        
+         for(int i=0 ; i<vBars.size()-1;i++)
+        {
+            if(vBars[i]+1==vBars[i+1]) hor_count++;
+            else
+            {
+                hor_count=1;
+            }
+            max_hcount = max(max_hcount,hor_count);
+        }
+
+        int ans = min(max_vcount , max_hcount)+1;
+        return ans*ans;
+
+    }
+};
