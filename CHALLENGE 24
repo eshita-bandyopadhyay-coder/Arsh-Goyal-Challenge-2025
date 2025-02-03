@@ -1,0 +1,35 @@
+//LEETCODE 2343: Query Kth Smallest Trimmed 
+
+class Solution {
+public:
+    vector<vector<pair<string,int>>>precomp;
+    vector<int> smallestTrimmedNumbers(vector<string>& nums, vector<vector<int>>& queries) {
+        vector<pair<string,int>>v;
+        for(int i =0;i<nums.size();i++)
+        {
+            reverse(nums[i].begin(),nums[i].end());
+            v.push_back({nums[i],i});
+        }
+        precomp.push_back(v);
+        int len=nums[0].size();
+        for(int i=0;i<len-1;i++)
+        {
+            if(v[0].first.size()==0) break;
+            for(int i=0;i<v.size();i++){
+                v[i].first.pop_back();
+            }
+            precomp.push_back(v);
+        }
+            for(int i=0;i<precomp.size();i++){
+                for(int j=0;j<precomp[i].size();j++){
+                    reverse(precomp[i][j].first.begin(),precomp[i][j].first.end());
+                }
+                sort(precomp[i].begin(),precomp[i].end());
+            }
+            vector<int>ans;
+            for(auto it:queries){
+                ans.push_back(precomp[len-it[1]][it[0]-1].second);
+            }
+        return ans;
+    }
+};
